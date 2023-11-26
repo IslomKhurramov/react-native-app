@@ -8,12 +8,71 @@ const weatherOptions = {
   Clear: {
     iconName: "weather-sunny",
     gradient: ["#56CCF2", "#2F80ED"],
-    title: "Amazing wether",
-    description: "Go for a walkp, stop staying at home",
+    title: "Amazing weather",
+    description: "Go for a walk, stop staying at home",
+  },
+  // Add more conditions as needed
+  Thunderstorm: {
+    iconName: "weather-lightning",
+    gradient: ["#141E30", "#2F80ED"],
+    title: "Sit at home",
+    description: "Did you see what is going on in the street???",
+  },
+  Drizzle: {
+    iconName: "weather-rainy",
+    gradient: ["#3a7bd5", "#243B55"],
+    title: "Take an umbrella",
+    description: "Perhaps rain will increase soon!",
+  },
+  Rain: {
+    iconName: "weather-pouring",
+    gradient: ["#000046", "#1CB5E0"],
+    title: "It is raining outside",
+    description: "So there will be a rainbow soon!",
+  },
+  Snow: {
+    iconName: "snowflake",
+    gradient: ["#83a4d4", "#b6fbff"],
+    title: "There is a snow outside!",
+    description: "Dress warmly, motherfucker!",
+  },
+  Snow: {
+    iconName: "weather-windy-variant",
+    gradient: ["#B79891", "#94716B"],
+    title: "Dusty!",
+    description: "Better close windows!",
+  },
+  Snow: {
+    iconName: "weather-windy",
+    gradient: ["#56CCF2", "#2F80ED"],
+    title: "On the street smog :(",
+    description: "Stay at home safely!",
+  },
+  Haze: {
+    iconName: "weather-hazy",
+    gradient: ["#3E5151", "#DECBA4"],
+    title: "There is a snow outside!",
+    description: "Stay at home safely!",
+  },
+  Mist: {
+    iconName: "weather-fog",
+    gradient: ["#606c88", "#3f4c6b"],
+    title: "You can not see a damn thing in the fog!",
+    description: "Stay at home safely!",
+  },
+  Clouds: {
+    iconName: "weather-cloudy",
+    gradient: ["#757F9A", "#D7DDE8"],
+    title: "The clouds!",
+    description: "Stay at home safely!",
   },
 };
 
 export default function Weather({ temp, name, condition }) {
+  console.log("temp", temp);
+  console.log("name", name);
+  console.log("condition", condition);
+
   return (
     <LinearGradient
       colors={weatherOptions[condition].gradient}
