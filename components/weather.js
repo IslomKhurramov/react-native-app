@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import AnimatedLoader from "react-native-animated-loader";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRef } from "react";
 
 const weatherOptions = {
   Clear: {
@@ -68,28 +69,115 @@ const weatherOptions = {
   },
 };
 
-export default function Weather({ temp, name, condition }) {
-  console.log("temp", temp);
-  console.log("name", name);
-  console.log("condition", condition);
+export default function Weather({ temp, name, condition, setWeather }) {
+  const [query, setQuery] = useState("");
+  const inputRef = useRef(null);
+
+  const handleInputValue = () => {
+    setWeather(query);
+    setQuery("");
+    if (inputRef.current) {
+      inputRef.current.blur(); // Blur the TextInput
+    }
+  };
 
   return (
     <LinearGradient
       colors={weatherOptions[condition].gradient}
-      style={styles.container}>
-      <MaterialCommunityIcons name={weatherOptions[condition].iconName} />
-      <Text>{temp}</Text>
-      <Text>{name}</Text>
-      <Text>{weatherOptions[condition].title}</Text>
-      <Text>{weatherOptions[condition].description}</Text>
+      style={styles.mainContainer}>
+      <View style={styles.containerRain}>
+        <MaterialCommunityIcons
+          name={weatherOptions[condition].iconName}
+          size={96}
+          color={
+            weatherOptions[condition].iconName === "weather-sunny"
+              ? "#FFFF19"
+              : "#C4D3DF"
+          }
+        />
+        <View style={styles.flex}>
+          <Text style={styles.temp}>{temp}° </Text>
+          <Text style={styles.temp}>| {name}</Text>
+        </View>
+        <View style={{ ...styles.containerRain, ...styles.textContainer }}>
+          <Text style={styles.title}>{weatherOptions[condition].title}</Text>
+          <Text style={styles.description}>
+            {weatherOptions[condition].description}
+          </Text>
+        </View>
+
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="City"
+            value={query}
+            onChangeText={(text) => setQuery(text)}></TextInput>
+          <Button
+            onPress={handleInputValue}
+            style={styles.search}
+            title="Search..."
+            color={"white"}></Button>
+        </View>
+      </View>
     </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
+    flex: 1,
+  },
+  containerRain: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 155,
+  },
+  temp: {
+    fontSize: 42,
+    color: "white",
+  },
+  flex: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  textContainer: {
+    flex: 1,
+  },
+  title: {
+    color: "white",
+    fontSize: 44,
+    fontWeight: "300",
+    marginBottom: 10,
+    textAlign: "left",
+  },
+  description: {
+    color: "white",
+    fontWeight: "600",
+    fontSize: 24,
+    textAlign: "left",
+  },
+  searchContainer: {
+    backgroundColor: "#e8e8e8",
+    width: "80%",
+    padding: 10,
+    marginTop: 10,
+    position: "relative",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderRadius: 10,
+    marginBottom: 305,
+    position: "absolute",
+  },
+  input: {
+    color: "black",
+    width: "65%",
+    fontSize: 24,
+  },
+  search: {
+    backgroundColor: "#3377FF",
+    width: "15%",
+    height: 20,
   },
 });
